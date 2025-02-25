@@ -12,51 +12,49 @@ function getHumanChoice(){
 }
 
 function playRound(humanChoice, computerChoice){
+    const roundResult = document.querySelector('#result')
+    let result = ''
+
     if (humanChoice == computerChoice){
-        console.log('Same input. Tie game!');
+        result = 'Same input. Tie game!';
     }else if (humanChoice == 'rock'){
         if (computerChoice == 'scissors'){
-            console.log('You win! Rock beats scissors!')
+            result = 'You win! Rock beats scissors!'
             humanScore++;
         }else{
-            console.log('You lose! Paper beats rock!')
+            result = 'You lose! Paper beats rock!'
             computerScore++;
         }
     }else if (humanChoice == 'paper'){
         if (computerChoice == 'rock'){
-            console.log('You win! Paper beats rock!')
+            result = 'You win! Paper beats rock!'
             humanScore++;
         }else{
-            console.log('You lose! Scissor beats paper!')
+            result = 'You lose! Scissor beats paper!'
             computerScore++;
         }
     }else{
         if (computerChoice == 'paper'){
-            console.log('You win! Scissors beats paper!')
+            result = 'You win! Scissors beats paper!'
             humanScore++;
         }else{
-            console.log('You lose! Rock beats scissors!')
+            result = 'You lose! Rock beats scissors!'
             computerScore++;
         }
     }
+
+    roundResult.innerHTML += "<br>Human Score: " + humanScore + 
+        "<br>Computer Score: " + computerScore +
+        "<br>" + result
 }
 
-function playGame(){
-    humanScore = 0;
-    computerScore = 0;
-
-    for(let i = 0; i < 5; i++){
-        playRound(getHumanChoice(),getComputerChoice());
-    }
-
-    if(humanScore == computerScore){
-        console.log('Tie game! No one wins');
-    }else if(humanScore > computerScore){
-        console.log('Human wins!');
-    }else{
-        console.log('Computer wins!');
-    }
-
-    console.log('Human round wins: ' + humanScore);
-    console.log('Computer round wins: ' + computerScore);
-}
+const buttons = document.querySelectorAll('button')
+buttons.forEach((button) => {
+    button.addEventListener('click',() => {
+        const computerChoice = getComputerChoice()
+        document.querySelector('#result').innerHTML = 
+            "Computer Choice: " + computerChoice +
+            "<br>Human Choice: " + button.id
+        playRound(button.id,computerChoice)
+    })
+})
